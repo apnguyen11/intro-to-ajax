@@ -31,6 +31,7 @@
   function clickBtn () {
     $('#jumbotronContainer2').load('jumbotron.html')
     $('#loadBtn2').remove()
+
   }
 
   //
@@ -71,6 +72,42 @@
   //
 
   // TODO: your code goes here :)
+
+  $('#generateDoggoBtn').click(clickBtn2)
+
+  function clickBtn2() {
+    $('#generateDoggoBtn').text('Generating Doggo ...');
+    $('#generageDoggoBtn').prop("disabled", true)
+    $.ajax({
+      datatype: 'JSON',
+      url: 'https://dog.ceo/api/breeds/image/random',
+      success: insertDogPic,
+      error: function(error){
+        console.log("error")
+      }
+    })
+  
+
+
+    function insertDogPic(pic){
+      var dogImageLink = pic.message; // targets image
+      $('#doggoContainer').html(`<img id='image' src='${dogImageLink}'>`)
+      
+      $('#image').on('load', function(){
+          $('#generateDoggoBtn').text('Generate Dog');
+          $('#generageDoggoBtn').prop("disabled", false)
+
+
+      })
+      
+
+
+
+
+    }
+
+
+  }
 
   //
   // Cool. Now let's kick it up a notch and allow selecting a specific breed of dog!
