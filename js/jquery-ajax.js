@@ -76,8 +76,8 @@
   $('#generateDoggoBtn').click(clickBtn2)
 
   function clickBtn2() {
-    $('#generateDoggoBtn').text('Generating Doggo ...');
-    $('#generageDoggoBtn').prop("disabled", true)
+    $('#generateDoggoBtn').text('Generating Doggo ...'); //changes text of button
+    $('#generageDoggoBtn').prop("disabled", true) //disables button 
     $.ajax({
       datatype: 'JSON',
       url: 'https://dog.ceo/api/breeds/image/random',
@@ -86,27 +86,16 @@
         console.log("error")
       }
     })
-  
-
-
     function insertDogPic(pic){
       var dogImageLink = pic.message; // targets image
+
       $('#doggoContainer').html(`<img id='image' src='${dogImageLink}'>`)
       
       $('#image').on('load', function(){
           $('#generateDoggoBtn').text('Generate Dog');
           $('#generageDoggoBtn').prop("disabled", false)
-
-
       })
-      
-
-
-
-
     }
-
-
   }
 
   //
@@ -144,6 +133,88 @@
   //
 
   // TODO: your code goes here :)
+//var breed = document.getElementById("selectBreedContainer");
+//breed.innerHTML = `<select></select>`
+
+/*
+
+$.ajax({
+  datatype: 'JSON',
+  url: 'https://dog.ceo/api/breeds/list',
+  success: addBreeds,
+  error: function(error){
+    console.log("error")
+  }
+})
+
+*/
+
+$.getJSON('https://dog.ceo/api/breeds/list', function(breeds){
+  $("#selectBreedContainer").html(`<select id="selector"> <option id="first"> -- select an option -- </option></select>`)
+  var breeds = breeds.message;
+  $.each(breeds, function addBreeds(i){
+     $("#selector").append(`<option value ="${breeds[i]}">${breeds[i]}</option>`);
+  
+  })
+    /*
+    $('#image').on('click', function(){
+        $('#generateDoggoBtn').text('Generate Dog');
+        $('#generageDoggoBtn').prop("disabled", false)
+    })
+    */
+
+
+   $('#selector').on('change', consoleDog)
+ })
+
+
+
+ //$('#selector').on('change', insertDog)
+   function consoleDog(){
+    var dogNames = $("#selector").val()  
+      //var dogImageLinks = `https://dog.ceo/api/breed/${dogNames}/images/random`
+      //console.log(dogImageLinks)
+      $.ajax({
+        datatype: 'JSON',
+        url: 'https://dog.ceo/api/breeds/image/random',
+        success: insertDog,
+        error: function(error){
+          console.log("error")
+        }
+      })
+      
+      function insertDog(pic){
+        var dogImageLink = pic.message;
+        $('#doggoContainer').html(`<img src="${dogImageLink}">`)
+
+      }
+    
+   
+  
+    //function consoleDog(pick){
+     //
+     //var realLinks = pick
+     //console.log(dogNames)  
+    //$('#doggoContainer').html(``)
+    //}
+   }
+
+ 
+ /*
+ var output = '';
+ for(var i in breeds){
+    output +=  '<select>' +
+    '<ul> <li>'+breeds+'</li> </ul>' +
+    '</select>' 
+ }
+
+ $("#selectBreedContainer").html(`${output}`)
+ */
+
+
+
+
+
 
   //
   // Excellent work!
