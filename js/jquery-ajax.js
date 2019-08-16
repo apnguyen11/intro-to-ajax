@@ -152,18 +152,13 @@ $.ajax({
 $.getJSON('https://dog.ceo/api/breeds/list', function(breeds){
   $("#selectBreedContainer").html(`<select id="selector"> <option id="first"> -- select an option -- </option></select>`)
   var breeds = breeds.message;
+  console.log(breeds)
   $.each(breeds, function addBreeds(i){
+
      $("#selector").append(`<option value ="${breeds[i]}">${breeds[i]}</option>`);
-  
+    
+      
   })
-    /*
-    $('#image').on('click', function(){
-        $('#generateDoggoBtn').text('Generate Dog');
-        $('#generageDoggoBtn').prop("disabled", false)
-    })
-    */
-
-
    $('#selector').on('change', consoleDog)
  })
 
@@ -172,6 +167,7 @@ $.getJSON('https://dog.ceo/api/breeds/list', function(breeds){
  //$('#selector').on('change', insertDog)
    function consoleDog(){
     var dogNames = $("#selector").val()  
+    console.log(dogNames)
       //var dogImageLinks = `https://dog.ceo/api/breed/${dogNames}/images/random`
       //console.log(dogImageLinks)
       $.ajax({
